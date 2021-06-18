@@ -2,7 +2,7 @@
 Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
 
-<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="300">
+<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 Yang, Chao-Han Huck; Tsai, Yun-Yun; Chen, Pin-Yu
 
