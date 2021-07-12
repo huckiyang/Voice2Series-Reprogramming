@@ -8,4 +8,4 @@ Yang, Chao-Han Huck; Tsai, Yun-Yun; Chen, Pin-Yu
 
 - International Conference on Machine Learning (ICML), 2021
 
-**We will release the code and implemented layers before July 11th (Sun). Thank you!** 
+**We will release the code and implemented layers before July 12th (Mon). Thank you!** 
