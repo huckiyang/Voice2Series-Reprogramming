@@ -1,18 +1,11 @@
-## Author C.-H. Huck Yang, MIT License
-## Copyright (c) 2021 huckiyang
-## Refer to "Voice2Series: Reprogramming Acoustic Models for Time Series Classification" ICML 2021 for Training Details 
-## Please Consider to Credit the related references, if you use this implementation and find this work helps. 
-
-
 from tensorflow.keras.layers import Dense, ZeroPadding1D, Reshape
 import tensorflow as tf
 from tensorflow import keras
 import tensorflow.keras.backend as K
 import numpy as np
 ## time series NN models
-from ts_model import AttRNN_Model, VGGish_Model, ARTLayer, WARTmodel, make_model
+from old_ts_model import AttRNN_Model, VGGish_Model, ARTLayer, WARTmodel, Conv1D_model
 from ts_dataloader import readucr, plot_acc_loss
-from resnet import transfer_res, transfer_att
 # from vggish.model import Vggish_Model
 import argparse
 import os
@@ -22,7 +15,7 @@ K.clear_session()
 # K.set_learning_phase(0)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--net", type = str, default = 'attrsf', help = "att, vggish, aset")
+parser.add_argument("--net", type = str, default = 'att', help = "att, vggish, aset")
 parser.add_argument("--dataset", type = int, default = 0, help = "Ford-A (0), Beef (1), ECG200 (2), Wine (3), Earthquakes (4), Worms (5), Distal (6), Outline Correct (7), ECG-5k (8), ArrowH (9), CBF (10), ChlorineCon (11)")
 parser.add_argument("--mapping", type= int, default=1, help = "number of multi-mapping")
 parser.add_argument("--eps", type = int, default = 100, help = "Epochs") 
@@ -90,7 +83,7 @@ else:
 
 ## Loss
 adam = tf.keras.optimizers.Adam(lr=0.05,decay=0.48)
-save_path = "weight/" + "transfer/No" + str(args.dataset) +"/map" + str(args.mapping) + "_seg" + str(args.seg) + "_dr" + str(args.dr) +"_{epoch:02d}_{val_accuracy:.4f}.h5"
+save_path = "weight/" + "beta/No" + str(args.dataset) +"/map" + str(args.mapping) + "_seg" + str(args.seg) + "_dr" + str(args.dr) +"_{epoch:02d}_{val_accuracy:.4f}.h5"
 if args.per!= 0:
     checkpoints = tf.keras.callbacks.ModelCheckpoint(save_path, save_weights_only=True, period=args.per)
     exp_callback = [tf.keras.callbacks.EarlyStopping(patience=500), checkpoints]
@@ -124,6 +117,6 @@ print('- Test accuracy:', score[1])
 
 print("=== Best Val. Acc: ", max(exp_history.history['val_accuracy']), " At Epoch of ", np.argmax(exp_history.history['val_accuracy']))
 print("val. acc: ", exp_history.history['val_accuracy'])
-curr_dir='weight/transfer/No' + str(args.dataset) + '/'
+curr_dir='weight/beta/No' + str(args.dataset) + '/'
 plot_acc_loss(exp_history, str(args.eps), str(args.dataset), str(args.mapping), str(args.seg), str(args.dr), args.net)
 
