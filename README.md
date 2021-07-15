@@ -5,7 +5,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
-- International Conference on Machine Learning (ICML), 2021
+- International Conference on Machine Learning (ICML), 2021 [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf)
 
 
 ### 1. Environment
