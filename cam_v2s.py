@@ -134,13 +134,13 @@ def visual_sp(audios, use='base', clayer = args.layer):
 
     # ax3.imshow(librosa.power_to_db(specs[idAudio,:,:,0], ref=np.max))
     img3 = ax3.pcolormesh(specs[idAudio,:,:,0])
-    plt.colorbar(img3)
+#    plt.colorbar(img3)
     # ax3.set_title('Spectrogram visualization', fontsize=18)
     ax3.set_ylabel('Frequency', fontsize=18)
     ax3.set_xlabel('Time', fontsize=18)
 
     img4 = ax4.imshow(i_cam1, aspect="auto")
-    plt.colorbar(img4)
+#    plt.colorbar(img4)
     # ax4.set_title('Class Activation Mapping Conv2d', fontsize=18)
     ax4.set_xticks([])
     ax4.set_yticks([])
