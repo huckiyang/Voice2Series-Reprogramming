@@ -105,14 +105,14 @@ def visual_sp(audios, use='base', clayer = args.layer):
 
     w_x, h_x = specs[idAudio,:,:,0].shape
     i_heatmap1, _ = layer_output(audios, base_model, 'conv2d', idAudio)
-    i_heatmap2, _ = layer_output(audios, base_model, 'conv2d_1', idAudio)
+#    i_heatmap2, _ = layer_output(audios, base_model, 'conv2d_1', idAudio)
     i_cam1 = to_rgb(i_heatmap1, w_x, h_x)
-    i_cam2 = to_rgb(i_heatmap2, w_x, h_x)
+#    i_cam2 = to_rgb(i_heatmap2, w_x, h_x)
 
 
     plt.figure()
     plt.style.use("seaborn-whitegrid")
-    fig, (ax1, ax2,ax3, ax4, ax5) = plt.subplots(5, 1, figsize=(12, 20))
+    fig, (ax1, ax2,ax3, ax4) = plt.subplots(4, 1, figsize=(12, 20))
 
     # ax1.set_title('Raw waveform', fontsize=18)
     ax1.set_ylabel('Amplitude', fontsize=18)
@@ -145,17 +145,17 @@ def visual_sp(audios, use='base', clayer = args.layer):
     ax4.set_xticks([])
     ax4.set_yticks([])
     
-    img5 = ax5.imshow(i_cam2, aspect="auto")
-    plt.colorbar(img5)
+#    img5 = ax5.imshow(i_cam2, aspect="auto")
+#    plt.colorbar(img5)
     #ax5.set_title('Class Activation Mapping Conv2d_1', fontsize=18)
-    ax5.set_xticks([])
-    ax5.set_yticks([])
+#    ax5.set_xticks([])
+#    ax5.set_yticks([])
 
     plt.tight_layout()
     if use == 'base':
-        plt.savefig("results/" + data_ix + "_sp_" + cmd_k +".pdf")
+        plt.savefig("results/" + data_ix + "_sp_" + cmd_k +".png")
     else:
-        plt.savefig("results/" + data_ix + "_ts_No"+ str(args.dataset) +".pdf")
+        plt.savefig("results/" + data_ix + "_ts_No"+ str(args.dataset) +".png")
     
 
 def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
