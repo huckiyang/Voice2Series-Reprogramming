@@ -4,7 +4,7 @@ from tensorflow import keras
 import tensorflow.keras.backend as K
 import numpy as np
 ## time series NN models
-from old_ts_model import AttRNN_Model, VGGish_Model, ARTLayer, WARTmodel, Conv1D_model
+from ts_model import AttRNN_Model, VGGish_Model, ARTLayer, WARTmodel, Conv1D_model
 from ts_dataloader import readucr, plot_acc_loss
 # from vggish.model import Vggish_Model
 import argparse

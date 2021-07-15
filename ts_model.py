@@ -41,11 +41,10 @@ def VGGish_Model(audioset=False):
 
 # Adverserial Reprogramming layer
 class ARTLayer(Layer):
-    def __init__(self, tar_1ds, drop_rate=0.4, W_regularizer=0.05, **kwargs):
+    def __init__(self, tar_1ds, W_regularizer=0.05, **kwargs):
         self.init = initializers.get('glorot_uniform')
         self.W_regularizer = regularizers.l2(W_regularizer)
         self.tar_1ds = tar_1ds
-        self.dr_rate = drop_rate
         super(ARTLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -74,7 +73,7 @@ class ARTLayer(Layer):
         super(ARTLayer, self).build(input_shape)  # Be sure to call this at the end
 
     def call(self, x):
-        prog = K.dropout(self.W, self.dr_rate) # remove K.tanh
+        prog = K.dropout(self.W, 0.4) # remove K.tanh
         out = x + prog
         return out
 
@@ -82,29 +81,29 @@ class ARTLayer(Layer):
         return (input_shape[0],input_shape[1], input_shape[2])
 
 def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
-    
     src_xlen = 16000
     all_seg = src_xlen//orig_xlen
-    assert seg_num <= all_seg
     seg_len = np.int(np.floor(all_seg//seg_num))
     aug_x = tf.zeros([src_xlen,1])
     for s in range(seg_num):
         startidx = (s*seg_len)*orig_xlen
         endidx = (s*seg_len)*orig_xlen + orig_xlen
         print('seg idx: {} --> start: {}, end: {}'.format(s, startidx, endidx))
+    
         seg_x = ZeroPadding1D(padding=(startidx, src_xlen-endidx))(orig_x)
         aug_x += seg_x
+    print(aug_x)
     return aug_x
 
 # White Adversairal Reprogramming Time Series (WART) Model 
-def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes, seg_num, drop_rate):
+def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes):
     x = Input(shape=input_shape)
-    x_aug = SegZeroPadding1D(x, seg_num, input_shape[0])
+    x_aug = SegZeroPadding1D(x, 3, input_shape[0])
     # x1 = ZeroPadding1D(padding=(0, 16000-input_shape[0]))(x)
     # x2 = ZeroPadding1D(padding=(16000-input_shape[0], 0))(x)
     # x3 = ZeroPadding1D(padding=(np.int(np.floor((16000-input_shape[0])/2)), np.int(np.floor((16000-input_shape[0])/2))))(x)
     # x_aug = x1 + x2 + x3
-    out = ARTLayer(input_shape[0], drop_rate)(x_aug) # e.g., input_shape[0] = 500 for FordA
+    out = ARTLayer(input_shape[0])(x_aug) # e.g., input_shape[0] = 500 for FordA
     out = Reshape([16000,])(out)
     probs = pr_model(out)   
     map_probs = multi_mapping(probs, source_classes, mapping_num, target_classes)
@@ -116,7 +115,7 @@ def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes
     return model
 
 
-def make_model(input_shape, num_classes):
+def Conv1D_model(input_shape, num_classes):
     input_layer = keras.layers.Input(input_shape)
 
     conv1 = keras.layers.Conv1D(filters=64, kernel_size=3, padding="same")(input_layer)

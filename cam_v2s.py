@@ -1,5 +1,4 @@
-from ts_model import AttRNN_Model
-from old_ts_model import  ARTLayer, WARTmodel
+from ts_model import  AttRNN_Model, ARTLayer, WARTmodel
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Model, load_model
