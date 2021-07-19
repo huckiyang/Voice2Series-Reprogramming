@@ -31,7 +31,7 @@ conda install -c anaconda pillow
 ### Training
 
 ```python
-python v2s_main.py --dataset 0 --eps 100
+python v2s_main.py --dataset 0 --eps 100 --mapping 2
 ```
 
 
