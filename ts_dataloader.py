@@ -90,4 +90,4 @@ def plot_acc_loss(x_history, eps, data_ix, map_num):
     ax2.set_xlabel("Epoch")
     ax2.legend()
     plt.tight_layout()
-    plt.savefig("results/PadCenter/dataset_No"+ data_ix + "_eps"+ eps + "_map" + map_num + "_.png")
+    plt.savefig("results/dataset_No"+ data_ix + "_eps"+ eps + "_map" + map_num + "_.png") #PadCenter/
