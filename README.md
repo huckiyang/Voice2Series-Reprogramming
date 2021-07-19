@@ -23,10 +23,9 @@ conda env create -f V2S.yml
 - option 2 (from clean python 3.6)
 
 ```shell
-conda install -c anaconda tensorflow-gpu
-conda install -c conda-forge opencv
-conda install -c anaconda pillow
+pip install tensorflow-gpu==2.1.0
 pip install kapre==0.2.0
+pip install h5py==2.10.0
 ```
 
 ### Training
