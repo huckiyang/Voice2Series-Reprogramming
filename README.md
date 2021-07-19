@@ -26,6 +26,7 @@ conda env create -f V2S.yml
 conda install -c anaconda tensorflow-gpu
 conda install -c conda-forge opencv
 conda install -c anaconda pillow
+pip install kapre==0.2.0
 ```
 
 ### Training
