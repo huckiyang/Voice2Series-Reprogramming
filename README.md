@@ -6,7 +6,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
-- International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf)
+- International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing)
 
 
 ### Environment
@@ -30,9 +30,12 @@ pip install h5py==2.10.0
 
 ### Training
 
+- This is tengible Version. Please also check the paper for actual validation details. Many Thanks!
+
 ```python
 python v2s_main.py --dataset 0 --eps 100 --mapping 3
 ```
+
 
 - Result
 
