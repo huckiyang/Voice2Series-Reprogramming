@@ -7,30 +7,37 @@ from tensorflow.keras import initializers,regularizers
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow.keras.backend as K
 from kapre.utils import Normalization2D
-from SpeechModels import AttRNNSpeechModel
+from SpeechModels import AttRNNSpeechModel, VggishModel
 import numpy as np
 from utils import multi_mapping
 from tensorflow import keras
 
 print("tensorflow vr. ", tf.__version__, "kapre vr. ",kapre.__version__)
 
-def AttRNN_Model():
+def AttRNN_Model(unet=False):
 
     nCategs=36
     sr=16000
     #iLen=16000
 
-    model = AttRNNSpeechModel(nCategs, samplingrate = sr, inputLength = None)
+    model = AttRNNSpeechModel(nCategs, samplingrate = sr, inputLength = None, unet=False)
     model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
-    model.load_weights('weight/pr_attRNN.h5')
+    if unet == True:
+        model.load_weights('weight/pr_UattRNN.h5')
+    else:
+        model.load_weights('weight/pr_attRNN.h5')
     # model = load_model('weight/model-attRNN.h5', custom_objects={'Melspectrogram': Melspectrogram, 'Normalization2D': Normalization2D })
-
     # x = np.random.rand(32,16000)
     # print(model.predict(x).shape)
-    
     return model
 
-# model.summary()
+def VGGish_Model(audioset=False):
+    # nCategs=36
+    # iLen=16000
+    model = VggishModel(audioset = audioset)
+    model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
+    model.load_weights('weight/pr_vggish9405.h5')
+    return model
 
 # Adverserial Reprogramming layer
 class ARTLayer(Layer):
@@ -108,7 +115,7 @@ def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes
     return model
 
 
-def make_model(input_shape, num_classes):
+def Conv1D_model(input_shape, num_classes):
     input_layer = keras.layers.Input(input_shape)
 
     conv1 = keras.layers.Conv1D(filters=64, kernel_size=3, padding="same")(input_layer)

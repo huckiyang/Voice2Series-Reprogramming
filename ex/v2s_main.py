@@ -4,21 +4,24 @@ from tensorflow import keras
 import tensorflow.keras.backend as K
 import numpy as np
 ## time series NN models
-from ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model
+from ts_model import AttRNN_Model, VGGish_Model, ARTLayer, WARTmodel, Conv1D_model
 from ts_dataloader import readucr, plot_acc_loss
 # from vggish.model import Vggish_Model
 import argparse
-
+import os
+import re 
 # Learning phase is set to 0 since we want the network to use the pretrained moving mean/var
 K.clear_session()
 # K.set_learning_phase(0)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--net", type = int, default = 0, help = "Pretrained (0), AttRNN (#32), (1) VGGish (#512)")
+parser.add_argument("--net", type = str, default = 'att', help = "att, vggish, aset")
 parser.add_argument("--dataset", type = int, default = 0, help = "Ford-A (0), Beef (1), ECG200 (2), Wine (3), Earthquakes (4), Worms (5), Distal (6), Outline Correct (7), ECG-5k (8), ArrowH (9), CBF (10), ChlorineCon (11)")
 parser.add_argument("--mapping", type= int, default=1, help = "number of multi-mapping")
 parser.add_argument("--eps", type = int, default = 100, help = "Epochs") 
 parser.add_argument("--per", type = int, default = 0, help = "save weight per N epochs")
+parser.add_argument("--dr", type=int, default = 4, help = "drop out rate")
+parser.add_argument("--seg", type=int, default = 1, help = "seg padding number")
 args = parser.parse_args()
 
 
@@ -46,34 +49,41 @@ print("--- X shape : ", x_train[0].shape, "--- Num of Classes : ", num_classes) 
 
 
 ## Pre-trained Model for Adv Program  
-if args.net == 0:
+if args.net == 'att':
     pr_model = AttRNN_Model()
-else:
-    pr_model = Vggish_Model()
-
-# pr_model.summary()
+elif args.net == 'vggish':
+    pr_model = VGGish_Model()
+elif args.net == 'aset':
+    pr_model = VGGish_Model(audioset = True)
+elif args.net == 'unet':
+    pr_model = AttRNN_Model(unet= True)
 
 ## # of Source classes in Pre-trained Model
-if args.net == 0: ## choose pre-trained network 
+if args.net != 'aset': ## choose pre-trained network 
     source_classes = 36 ## Google Speech Commands
 else:
-    source_classes = 512 ## VGGish
+    source_classes = 128 ## AudioSet by VGGish
 
 target_shape = x_train[0].shape
 
 ## Adv Program Time Series (ART)
 mapping_num = args.mapping
+seg_num = args.seg
+drop_rate = args.dr*0.1
+
 try:
     assert mapping_num*num_classes <= source_classes
 except AssertionError:
     print("Error: The mapping num should be smaller than source_classes / num_classes: {}".format(source_classes//num_classes)) 
     exit(1)
-
-model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes)
+if args.net == "trsf" or "attrsf":
+    model = pr_model # already define for transfer learning
+else:
+    model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes, seg_num, drop_rate)
 
 ## Loss
 adam = tf.keras.optimizers.Adam(lr=0.05,decay=0.48)
-save_path = "weight/" + "beta/No" + str(args.dataset) +"_map" + str(args.mapping) + "-{epoch:02d}-{val_accuracy:.4f}.h5"
+save_path = "weight/" + "beta/No" + str(args.dataset) +"/map" + str(args.mapping) + "_seg" + str(args.seg) + "_dr" + str(args.dr) +"_{epoch:02d}_{val_accuracy:.4f}.h5"
 if args.per!= 0:
     checkpoints = tf.keras.callbacks.ModelCheckpoint(save_path, save_weights_only=True, period=args.per)
     exp_callback = [tf.keras.callbacks.EarlyStopping(patience=500), checkpoints]
@@ -106,7 +116,7 @@ print('- Test accuracy:', score[1])
 
 
 print("=== Best Val. Acc: ", max(exp_history.history['val_accuracy']), " At Epoch of ", np.argmax(exp_history.history['val_accuracy']))
-
-plot_acc_loss(exp_history, str(args.eps), str(args.dataset), str(args.mapping))
-
+print("val. acc: ", exp_history.history['val_accuracy'])
+curr_dir='weight/beta/No' + str(args.dataset) + '/'
+plot_acc_loss(exp_history, str(args.eps), str(args.dataset), str(args.mapping), str(args.seg), str(args.dr), args.net)
 

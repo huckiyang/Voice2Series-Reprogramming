@@ -1,4 +1,5 @@
 import numpy as np
+from pyts.datasets import fetch_ucr_dataset
 
 def readucr(port = 0):
 
@@ -50,12 +51,26 @@ def readucr(port = 0):
         print("---  ChlorineConcentration Dataset")
         root_tr_url = "Datasets/ChlorineCon/ChlorineCon_TRAIN.txt"
         root_te_url = "Datasets/ChlorineCon/ChlorineCon_TEST.txt"
+    elif port > 11:
+        taskname = get_taskname(port)
+        print("--- "+ taskname + " Dataset")
+        x_tr, x_te, y_tr, y_te = fetch_ucr_dataset(taskname, use_cache=True, data_home='Datasets/', return_X_y=True)
 
-
-    x_tr, y_tr = np_reader(root_tr_url, port)
-    x_te, y_te = np_reader(root_te_url, port)
+    if port <= 11:
+        x_tr, y_tr = np_reader(root_tr_url, port)
+        x_te, y_te = np_reader(root_te_url, port)
+    
     return x_tr, y_tr, x_te, y_te
 
+def get_taskname(port):
+    datalist = ['FordA', 'Beef', 'ECG200', 'Wine', 'Earthquakes', 'Worms', 'DistalPhalanxTW', 'Distal Phalanx Outline', 'ECG 5000', 'ArrowHead', ' Cylinder-Bell-Funnel', 'ChlorineConcentration']
+    with open ('task_list.txt', 'r') as file:
+        tasklist = file.readlines()
+    if port <= 11:
+        taskname = datalist[port]
+    elif port > 11:
+        taskname = tasklist[port-12].replace('\n', '').split(' ')[1]
+    return taskname
 
 def np_reader(filename, port):
 
@@ -70,7 +85,7 @@ def np_reader(filename, port):
 
 import matplotlib.pyplot as plt
 
-def plot_acc_loss(x_history, eps, data_ix, map_num):
+def plot_acc_loss(x_history, eps, data_ix, map_num, seg_num, dr_rate, net):
 
     plt.figure()
     plt.style.use("seaborn")
@@ -89,5 +104,7 @@ def plot_acc_loss(x_history, eps, data_ix, map_num):
     #ax2.set_ylim(top=5.5)
     ax2.set_xlabel("Epoch")
     ax2.legend()
+    best_val = str(max(x_history.history['val_accuracy']))
+    plt.title(net +"- best acc :" +best_val)
     plt.tight_layout()
-    plt.savefig("results/PadCenter/dataset_No"+ data_ix + "_eps"+ eps + "_map" + map_num + "_.png")
+    plt.savefig("results/No"+ data_ix + "/" + net + "_eps"+ eps  + "_map" + map_num + "_seg" + seg_num + "_dr" + dr_rate + "_" + best_val + ".png")
