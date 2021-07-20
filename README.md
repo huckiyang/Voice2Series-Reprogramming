@@ -12,7 +12,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 ### Environment
 
 
-tensorflow 2.2 (CUDA=10.0) and kapre 0.2.0
+tensorflow 2.2 (CUDA=10.0) and kapre 0.2.0. We will also provide Pytorch implementation V2S layers and frameworks.  
 
 - option 1 (from yml)
 
