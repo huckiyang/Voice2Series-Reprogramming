@@ -122,13 +122,10 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
   booktitle = 	 {Proceedings of the 38th International Conference on Machine Learning},
   pages = 	 {11808--11819},
   year = 	 {2021},
-  editor = 	 {Meila, Marina and Zhang, Tong},
   volume = 	 {139},
   series = 	 {Proceedings of Machine Learning Research},
   month = 	 {18--24 Jul},
   publisher =    {PMLR},
-  pdf = 	 {http://proceedings.mlr.press/v139/yang21j/yang21j.pdf},
-  url = 	 {http://proceedings.mlr.press/v139/yang21j.html},
 }
 
 ```
