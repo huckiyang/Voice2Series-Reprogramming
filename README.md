@@ -6,7 +6,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
-- International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing)
+- International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://recorder-v3.slideslive.com/?share=39647&s=f6016dd8-cca3-4541-bbeb-568e212537d6)
 
 
 ### Environment
@@ -106,7 +106,8 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 ```
 
   
- 
+- For sliced wasserstein distance mapping and theoretical analysis, we use the [POT](https://pythonot.github.io) package ([JMLR 2021](https://www.jmlr.org/papers/volume22/20-451/20-451.pdf)). 
+
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/results/0715_0318_ts_No5.png" width="600">
 
 ### Reference
