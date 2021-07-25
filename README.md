@@ -8,6 +8,9 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
 - International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://recorder-v3.slideslive.com/?share=39647&s=f6016dd8-cca3-4541-bbeb-568e212537d6)
 
+- We provide an end-to-end approach (ART layer) to reprogram on time series data on raw waveform with a differential mel-spectrogram layer from kapre. 
+
+- No offiline acoustic feature extraction and all layer are differentiable.
 
 ### Environment
 
