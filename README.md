@@ -146,4 +146,4 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 
 ### Question
 
-Please open an issue [here](https://github.com/huckiyang/Voice2Series-Reprogramming/issues/new/choose). Thank you!
+Please open an issue [here](https://github.com/huckiyang/Voice2Series-Reprogramming/issues). Thank you!
