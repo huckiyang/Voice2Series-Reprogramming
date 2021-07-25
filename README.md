@@ -105,10 +105,11 @@ Epoch 2/100
 python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --layer conv2d_1
 ```
 
-  
-- For sliced wasserstein distance mapping and theoretical analysis, we use the [POT](https://pythonot.github.io) package ([JMLR 2021](https://www.jmlr.org/papers/volume22/20-451/20-451.pdf)). 
-
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/results/0715_0318_ts_No5.png" width="600">
+
+### Discussion
+
+- For sliced wasserstein distance mapping and theoretical analysis, we use the [POT](https://pythonot.github.io) package ([JMLR 2021](https://www.jmlr.org/papers/volume22/20-451/20-451.pdf)). 
 
 ### Reference
 
