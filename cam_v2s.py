@@ -1,7 +1,6 @@
 # Original CAM Code is modified from Yang et al. ICASSP 2021 (https://arxiv.org/pdf/2010.13309.pdf)
 # Please consider to cite both de Andrade et al. 2018 and Yang et al. 2021, if you use the attention heads and CAM visualization.
 
-
 from ts_model import  AttRNN_Model, ARTLayer, WARTmodel
 import numpy as np
 import tensorflow as tf
