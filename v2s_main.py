@@ -1,6 +1,7 @@
 # CHH Yang et al. 2021 (http://proceedings.mlr.press/v139/yang21j/yang21j.pdf)
 # Apache Apache-2.0 License
 
+
 from tensorflow.keras.layers import Dense, ZeroPadding1D, Reshape
 import tensorflow as tf
 from tensorflow import keras
@@ -31,6 +32,10 @@ classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 
 x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
 x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
+
+# Note for cross validation to report a new time series results. Please refer to the cross-validation and "only use the training loss" to tune the model.
+# (Dau et al., 2019) and (Wang et al., 2017) cited in the V2S paper
+# The x_test and y_test are the official validation set in the UCR.
 
 num_classes = len(np.unique(y_train))
 
