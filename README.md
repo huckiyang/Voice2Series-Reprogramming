@@ -12,7 +12,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="750">
 
 
-- We provide an end-to-end approach (Repro. layer) to reprogram on time series data on raw waveform with a differential mel-spectrogram layer from kapre. 
+- We provide an end-to-end approach (Repro. layer) to reprogram on time series data on `raw waveform` with a differential mel-spectrogram layer from kapre. 
 
 - No offiline acoustic feature extraction and all layer are differentiable.
 
@@ -21,7 +21,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
 Tensorflow 2.2 (CUDA=10.0) and Kapre 0.2.0. 
 
-- PyTorch noted: Echo to many interests from the community, we will also provide Pytorch V2S layers and frameworks around this September, incoperating the new torch audio layers. Feel free to email the authors for further reprogramming collaboration.
+- PyTorch noted: Echo to many interests from the community, we will also provide Pytorch V2S layers and frameworks around this September, incoperating the new torch audio layers. Feel free to email the authors for `further reprogramming collaboration`.
 
 - option 1 (from yml)
 
