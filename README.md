@@ -9,7 +9,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 - International Conference on Machine Learning (ICML), 2021 | [Paper](http://proceedings.mlr.press/v139/yang21j/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://recorder-v3.slideslive.com/?share=39647&s=f6016dd8-cca3-4541-bbeb-568e212537d6)
 
 
-<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="500">
+<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="750">
 
 
 - We provide an end-to-end approach (Repro. layer) to reprogram on time series data on raw waveform with a differential mel-spectrogram layer from kapre. 
@@ -117,6 +117,11 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 ### Discussion
 
 - For sliced wasserstein distance mapping and theoretical analysis, we use the [POT](https://pythonot.github.io) package ([JMLR 2021](https://www.jmlr.org/papers/volume22/20-451/20-451.pdf)). 
+
+<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/repro_theo.png" width="500">
+
+
+- The population risk for the target task via reprogramming aK-waysource neural network classifier is upper bounded by equation above.
 
 ### Reference
 
