@@ -121,7 +121,7 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/repro_theo.png" width="500">
 
 
-- The population risk for the target task via reprogramming aK-waysource neural network classifier is upper bounded by equation above.
+- The population risk for the target task via reprogramming a K-way source neural network classifier is upper bounded by equation above.
 
 ### Reference
 
