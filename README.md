@@ -14,7 +14,7 @@ Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
 - We provide an end-to-end approach (Repro. layer) to reprogram on time series data on `raw waveform` with a differential mel-spectrogram layer from kapre. 
 
-- No offiline acoustic feature extraction and all layer are differentiable.
+- No offiline acoustic feature extraction and all layers are differentiable.
 
 ### Environment
 
