@@ -133,7 +133,7 @@ I would recommend using different label mapping numbers for training. For instan
 
 - 2. Masking the target sequence is important?
 
-Yes, V2S [mask](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_model.py#L53) is provided as an option, but the training script is not using the masking for forwarding passing. From our experiments, using or not using the masking only has small variants on the performance. This is not in conflict with the proposed theoretical analysis on learning target domain adaption.
+V2S [mask](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_model.py#L53) is provided as an option, but the training script is not using the masking for forwarding passing. From our experiments, using or not using the masking only has small variants on the performance. This is not in conflict with the proposed theoretical analysis on learning target domain adaption.
 
 - 3. Can we use Voice2Series for other domains or collaberate with the team?
 
