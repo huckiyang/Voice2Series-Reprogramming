@@ -144,7 +144,7 @@ Yes, you are welcome. Please send an email to the author for potential collabera
 
 - Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
-Please consider referencing the paper if you find this work helpful or relative to your research. The draft was done in Jan 2021; the project started in Sep 2020.
+Please consider to reference the paper if you find this work helpful or relative to your research. The draft was done in Jan 2021; the project started in Sep 2020.
 
 
 ```bib
