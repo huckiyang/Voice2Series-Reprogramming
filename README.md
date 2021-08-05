@@ -114,7 +114,7 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/results/0715_0318_ts_No5.png" width="600">
 
-### Discussion
+### Theoretical Discussion
 
 - For sliced wasserstein distance mapping and theoretical analysis, we use the [POT](https://pythonot.github.io) package ([JMLR 2021](https://www.jmlr.org/papers/volume22/20-451/20-451.pdf)). 
 
@@ -123,9 +123,28 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 
 - The population risk for the target task via reprogramming a K-way source neural network classifier is upper bounded by equation above.
 
+
+
+### FAQ
+
+- 1. Tips for tuning the model?
+
+I would recommend using different label mapping numbers for training. For instance, you could use `--mapping 7` for `ECG 5000` dataset. The dropout rate is also an important hyperparameter for tunning the testing loss. You could use a range between `0.2` to `0.5` in this [line](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_model.py#L72).
+
+- 2. Masking the target sequence is important?
+
+Yes, V2S [mask](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_model.py#L53) is provided as an option, but the training script is not using the masking for forwarding passing. From our experiments, using or not using the masking only has small variants on the performance. This is not in conflict with the proposed theoretical analysis on learning target domain adaption.
+
+- 3. Can we use Voice2Series for other domains or collaberate with the team?
+
+Yes, you are welcome. Please send an email to the author for potential collaberation.
+
+
 ### Reference
 
 - Voice2Series: Reprogramming Acoustic Models for Time Series Classification
+
+Please consider referencing the paper if you find this work helpful or relative to your research. 
 
 
 ```bib
@@ -144,6 +163,6 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 
 ```
 
-### Question
+#### Additional Questions
 
-Please open an issue [here](https://github.com/huckiyang/Voice2Series-Reprogramming/issues). Thank you!
+Please open an issue [here](https://github.com/huckiyang/Voice2Series-Reprogramming/issues) for discussion. Thank you!
