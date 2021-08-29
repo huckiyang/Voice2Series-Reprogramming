@@ -106,7 +106,7 @@ def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes
     model = Model(inputs=x, outputs= map_probs)
 
     # Freezing pre-trained model
-    model.layers[-1].trainable = False
+    model.layers[-7].trainable = False
 
     return model
 
