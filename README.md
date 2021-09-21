@@ -193,7 +193,7 @@ python cam_v2s.py --dataset 5 --weight wNo5_map6-88-0.7662.h5 --mapping 6 --laye
 
 - 1. Tips for tuning the model?
 
-I would recommend using different label mapping numbers for training. For instance, you could use `--mapping 7` for `ECG 5000` dataset. The dropout rate is also an important hyperparameter for tuning the testing loss. You could use a range between `0.2` to `0.5` in this [line](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_model.py#L72).
+I would recommend using different label mapping numbers for training. For instance, you could use `--mapping 7` for `ECG 5000` dataset. The dropout rate is also an important hyperparameter for tuning the testing loss. You could use a range between `0.2` to `0.5` with `--dr 4` for `0.4`.
 
 - 2. Masking the target sequence is important?
 
