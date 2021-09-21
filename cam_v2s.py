@@ -92,7 +92,7 @@ num_classes = len(np.unique(y_train))
 x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 target_shape = x_test[0].shape
 
-art_model = WARTmodel(target_shape, model, 36,  args.mapping, num_classes)
+art_model = WARTmodel(target_shape, model, 36,  args.mapping, num_classes, mod=2)
 art_model.load_weights("weight/"+ args.weight)
 
 

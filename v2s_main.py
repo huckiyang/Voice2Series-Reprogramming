@@ -18,6 +18,7 @@ K.clear_session()
 # K.set_learning_phase(0)
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--mod", type = int, default = 0, help = "Single input seq (0), multiple input aug (1), repro w/ TF (2)")
 parser.add_argument("--net", type = int, default = 0, help = "Pretrained (0), AttRNN (#32), (1) VGGish (#512)")
 parser.add_argument("--dataset", type = int, default = 0, help = "Ford-A (0), Beef (1), ECG200 (2), Wine (3), Earthquakes (4), Worms (5), Distal (6), Outline Correct (7), ECG-5k (8), ArrowH (9), CBF (10), ChlorineCon (11)")
 parser.add_argument("--mapping", type= int, default=1, help = "number of multi-mapping")
@@ -77,7 +78,7 @@ except AssertionError:
     print("Error: The mapping num should be smaller than source_classes / num_classes: {}".format(source_classes//num_classes)) 
     exit(1)
 
-model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes)
+model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes, args.mod)
 
 ## Loss
 adam = tf.keras.optimizers.Adam(lr=0.05,decay=0.48)
@@ -97,8 +98,12 @@ batch_size = 32
 epochs = args.eps
 
 # convert class vectors to binary class matrices
-y_train = keras.utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.to_categorical(y_test, num_classes)
+if args.mod == 0: # single input w/ random mapping
+    y_train = keras.utils.to_categorical(y_train, source_classes)
+    y_test = keras.utils.to_categorical(y_test, source_classes)
+else: # with many to one mapping
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
 
 
 exp_history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1,

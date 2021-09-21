@@ -37,10 +37,11 @@ def AttRNN_Model():
 
 # Adverserial Reprogramming layer
 class ARTLayer(Layer):
-    def __init__(self, tar_1ds, W_regularizer=0.05, **kwargs):
+    def __init__(self, tar_1ds, mod = 0, W_regularizer=0.05, **kwargs):
         self.init = initializers.get('glorot_uniform')
         self.W_regularizer = regularizers.l2(W_regularizer)
         self.tar_1ds = tar_1ds
+        self.mod = mod
         super(ARTLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -53,20 +54,22 @@ class ARTLayer(Layer):
         # Masking matrix
         print("--- Preparing Masking Matrix")
         ### pad at beginning
-        # self.M = np.ones((16000,1)).astype('float32')
-        # self.M[0:self.tar_1ds,0] = 0
+        if self.mod == 0:
+            self.M = np.ones((16000,1)).astype('float32')
+            self.M[0:self.tar_1ds,0] = 0
         
-        ### pad at center
-        self.M_center = np.zeros((1,self.tar_1ds)).astype('float32')
-        maxlen1 = np.int(np.floor((16000-self.tar_1ds)/2) + self.tar_1ds) 
-        maxlen2 = 16000
-        self.pre_M = pad_sequences(self.M_center, maxlen=maxlen1, dtype='float32', padding='pre', value=1.0) #111...111[tar]
-        self.pos_M = pad_sequences(self.pre_M, maxlen=maxlen2, dtype='float32', padding='post', value=1.0) #111...111[tar]111...111
+        elif self.mod == 1:
+            ### pad at center
+            self.M_center = np.zeros((1,self.tar_1ds)).astype('float32')
+            maxlen1 = np.int(np.floor((16000-self.tar_1ds)/2) + self.tar_1ds) 
+            maxlen2 = 16000
+            self.pre_M = pad_sequences(self.M_center, maxlen=maxlen1, dtype='float32', padding='pre', value=1.0) #111...111[tar]
+            self.pos_M = pad_sequences(self.pre_M, maxlen=maxlen2, dtype='float32', padding='post', value=1.0) #111...111[tar]111...111
         # tmp_indices = tf.where(tf.equal(self.pos_M, 0.0))
         # assert tf.reduce_sum(tmp_indices[0]) == np.int(np.floor((16000-self.tar_1ds)/2)) 
-        self.M = tf.transpose(self.pos_M)
+            self.M = tf.transpose(self.pos_M)
 
-        super(ARTLayer, self).build(input_shape)  # Be sure to call this at the end
+        super(ARTLayer, self).build(input_shape)  # Make layer
 
     def call(self, x):
         prog = K.dropout(self.W, 0.4) # remove K.tanh
@@ -92,21 +95,29 @@ def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
     return aug_x
 
 # White Adversairal Reprogramming Time Series (WART) Model 
-def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes):
+def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes, mod = 0):
     x = Input(shape=input_shape)
     x_aug = SegZeroPadding1D(x, 3, input_shape[0])
     # x1 = ZeroPadding1D(padding=(0, 16000-input_shape[0]))(x)
     # x2 = ZeroPadding1D(padding=(16000-input_shape[0], 0))(x)
     # x3 = ZeroPadding1D(padding=(np.int(np.floor((16000-input_shape[0])/2)), np.int(np.floor((16000-input_shape[0])/2))))(x)
     # x_aug = x1 + x2 + x3
-    out = ARTLayer(input_shape[0])(x_aug) # e.g., input_shape[0] = 500 for FordA
+    out = ARTLayer(input_shape[0], mod = mod)(x_aug) # e.g., input_shape[0] = 500 for FordA
     out = Reshape([16000,])(out)
     probs = pr_model(out)   
-    map_probs = multi_mapping(probs, source_classes, mapping_num, target_classes)
-    model = Model(inputs=x, outputs= map_probs)
+    
+    if mod != 0:
+        probs = multi_mapping(probs, source_classes, mapping_num, target_classes)
+    
+    model = Model(inputs=x, outputs= probs)
 
     # Freezing pre-trained model
-    model.layers[-7].trainable = False # [-7] for using label mapping; [-1] for not using label mapping
+    if mod == 0:
+        model.layers[-1].trainable = False
+    elif mod == 1:
+        model.layers[-7].trainable = False
+    elif mod == 2:
+        model.layers[-1].trainable = True # new setup after ICML 21, which allows reprogramming with fine-tuning.
 
     return model
 
