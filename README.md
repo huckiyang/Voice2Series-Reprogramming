@@ -39,10 +39,13 @@ pip install h5py==2.10.0
 
 ### Training
 
-- This is tengible Version. Please also check the paper for actual validation details. Many Thanks!
+- Random Mapping 
+
+Please also check the paper for actual validation details. Many Thanks!
+
 
 ```python
-python v2s_main.py --dataset 0 --eps 100 --mapping 3
+python v2s_main.py --dataset 0 --eps 5 --mod 0
 ```
 
 
@@ -100,6 +103,70 @@ Epoch 5/5
 - Test accuracy: 1.0
 === Best Val. Acc:  1.0  At Epoch of  4
 
+```
+
+- Many-to-one Label Mapping
+
+```python
+python v2s_main.py --dataset 0 --eps 5 --mapping 3 --mod 1
+```
+
+- Results
+
+```shell
+seg idx: 0 --> start: 0, end: 500
+Tensor("AddV2:0", shape=(None, 16000, 1), dtype=float32)
+--- Preparing Masking Matrix
+Model: "model_1"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_1 (InputLayer)            [(None, 500, 1)]     0                                            
+__________________________________________________________________________________________________
+zero_padding1d (ZeroPadding1D)  (None, 16000, 1)     0           input_1[0][0]                    
+__________________________________________________________________________________________________
+tf_op_layer_AddV2 (TensorFlowOp [(None, 16000, 1)]   0           zero_padding1d[0][0]             
+__________________________________________________________________________________________________
+art_layer (ARTLayer)            (None, 16000, 1)     16000       tf_op_layer_AddV2[0][0]          
+__________________________________________________________________________________________________
+reshape_1 (Reshape)             (None, 16000)        0           art_layer[0][0]                  
+__________________________________________________________________________________________________
+model (Model)                   (None, 36)           1292911     reshape_1[0][0]                  
+__________________________________________________________________________________________________
+tf_op_layer_MatMul (TensorFlowO [(None, 6)]          0           model[1][0]                      
+__________________________________________________________________________________________________
+tf_op_layer_Shape (TensorFlowOp [(2,)]               0           tf_op_layer_MatMul[0][0]         
+__________________________________________________________________________________________________
+tf_op_layer_strided_slice (Tens [()]                 0           tf_op_layer_Shape[0][0]          
+__________________________________________________________________________________________________
+tf_op_layer_Reshape_2/shape (Te [(3,)]               0           tf_op_layer_strided_slice[0][0]  
+__________________________________________________________________________________________________
+tf_op_layer_Reshape_2 (TensorFl [(None, 2, 3)]       0           tf_op_layer_MatMul[0][0]         
+                                                                 tf_op_layer_Reshape_2/shape[0][0]
+__________________________________________________________________________________________________
+tf_op_layer_Mean (TensorFlowOpL [(None, 2)]          0           tf_op_layer_Reshape_2[0][0]      
+==================================================================================================
+Total params: 1,308,911
+Trainable params: 16,000
+Non-trainable params: 1,292,911
+__________________________________________________________________________________________________
+Epoch 1/5
+2021-09-21 01:23:21.163046: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
+2021-09-21 01:23:21.389418: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+113/113 [==============================] - 5s 48ms/step - loss: 2.0503 - accuracy: 1.0000 - val_loss: 1.3729 - val_accuracy: 1.0000
+Epoch 2/5
+113/113 [==============================] - 4s 40ms/step - loss: 1.1730 - accuracy: 1.0000 - val_loss: 1.0234 - val_accuracy: 1.0000
+Epoch 3/5
+113/113 [==============================] - 4s 40ms/step - loss: 0.9352 - accuracy: 1.0000 - val_loss: 0.8614 - val_accuracy: 1.0000
+Epoch 4/5
+113/113 [==============================] - 4s 40ms/step - loss: 0.8044 - accuracy: 1.0000 - val_loss: 0.7538 - val_accuracy: 1.0000
+Epoch 5/5
+113/113 [==============================] - 4s 39ms/step - loss: 0.7154 - accuracy: 1.0000 - val_loss: 0.6810 - val_accuracy: 1.0000
+--- Train loss: 0.680957019329071
+- Train accuracy: 1.0
+--- Test loss: 0.6809701919555664
+- Test accuracy: 1.0
+=== Best Val. Acc:  1.0  At Epoch of  0
 ```
 
 
