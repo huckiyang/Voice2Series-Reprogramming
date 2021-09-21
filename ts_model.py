@@ -37,11 +37,12 @@ def AttRNN_Model():
 
 # Adverserial Reprogramming layer
 class ARTLayer(Layer):
-    def __init__(self, tar_1ds, mod = 0, W_regularizer=0.05, **kwargs):
+    def __init__(self, tar_1ds, mod = 0, drop_rate=0.4, W_regularizer=0.05, **kwargs):
         self.init = initializers.get('glorot_uniform')
         self.W_regularizer = regularizers.l2(W_regularizer)
         self.tar_1ds = tar_1ds
         self.mod = mod
+        self.dr_rate = drop_rate
         super(ARTLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -72,7 +73,7 @@ class ARTLayer(Layer):
         super(ARTLayer, self).build(input_shape)  # Make layer
 
     def call(self, x):
-        prog = K.dropout(self.W, 0.4) # remove K.tanh
+        prog = K.dropout(self.W, self.dr_rate) # remove K.tanh
         out = x + prog
         return out
 
@@ -95,9 +96,9 @@ def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
     return aug_x
 
 # White Adversairal Reprogramming Time Series (WART) Model 
-def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes, mod = 0):
+def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes, mod = 0, seg_num =3, drop_rate=0.4):
     x = Input(shape=input_shape)
-    x_aug = SegZeroPadding1D(x, 3, input_shape[0])
+    x_aug = SegZeroPadding1D(x, seg_num, input_shape[0])
     # x1 = ZeroPadding1D(padding=(0, 16000-input_shape[0]))(x)
     # x2 = ZeroPadding1D(padding=(16000-input_shape[0], 0))(x)
     # x3 = ZeroPadding1D(padding=(np.int(np.floor((16000-input_shape[0])/2)), np.int(np.floor((16000-input_shape[0])/2))))(x)

@@ -24,6 +24,8 @@ parser.add_argument("--dataset", type = int, default = 0, help = "Ford-A (0), Be
 parser.add_argument("--mapping", type= int, default=1, help = "number of multi-mapping")
 parser.add_argument("--eps", type = int, default = 100, help = "Epochs") 
 parser.add_argument("--per", type = int, default = 0, help = "save weight per N epochs")
+parser.add_argument("--dr", type=int, default = 4, help = "drop out rate")
+parser.add_argument("--seg", type=int, default = 1, help = "seg padding number")
 args = parser.parse_args()
 
 
@@ -57,28 +59,41 @@ print("--- X shape : ", x_train[0].shape, "--- Num of Classes : ", num_classes) 
 ## Pre-trained Model for Adv Program  
 if args.net == 0:
     pr_model = AttRNN_Model()
-else:
+elif args.net == 1:
     pr_model = Vggish_Model()
+elif args.net == 2: # audio-set
+    pr_model = VGGish_Model(audioset = True)
+elif args.net == 3: # unet
+    pr_model = AttRNN_Model(unet= True)
+
 
 # pr_model.summary()
 
 ## # of Source classes in Pre-trained Model
 if args.net == 0: ## choose pre-trained network 
     source_classes = 36 ## Google Speech Commands
+elif args.net == 2:
+    source_classes = 128 ## AudioSet by VGGish
 else:
-    source_classes = 512 ## VGGish
+    source_classes = 512 ## VGGish feature num
 
 target_shape = x_train[0].shape
 
 ## Adv Program Time Series (ART)
 mapping_num = args.mapping
+seg_num = args.seg
+drop_rate = args.dr*0.1
+
 try:
     assert mapping_num*num_classes <= source_classes
 except AssertionError:
     print("Error: The mapping num should be smaller than source_classes / num_classes: {}".format(source_classes//num_classes)) 
     exit(1)
 
-model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes, args.mod)
+model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes, args.mod, seg_num, drop_rate)
+# else:
+# model = pr_model # define for transfer learning
+
 
 ## Loss
 adam = tf.keras.optimizers.Adam(lr=0.05,decay=0.48)
