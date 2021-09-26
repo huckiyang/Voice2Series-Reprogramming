@@ -213,17 +213,13 @@ Please consider to reference the paper if you find this work helpful or relative
 
 ```bib
 
-@InProceedings{pmlr-v139-yang21j,
-  title = 	 {Voice2Series: Reprogramming Acoustic Models for Time Series Classification},
-  author =       {Yang, Chao-Han Huck and Tsai, Yun-Yun and Chen, Pin-Yu},
-  booktitle = 	 {Proceedings of the 38th International Conference on Machine Learning},
-  pages = 	 {11808--11819},
-  year = 	 {2021},
-  volume = 	 {139},
-  series = 	 {Proceedings of Machine Learning Research},
-  month = 	 {18--24 Jul},
-  publisher =    {PMLR},
+@article{yang2021voice2series,
+  title={Voice2Series: Reprogramming Acoustic Models for Time Series Classification},
+  author={Yang, Chao-Han Huck and Tsai, Yun-Yun and Chen, Pin-Yu},
+  journal={Proceedings of the 38th International Conference on Machine Learning (ICML), arXiv preprint arXiv:2106.09296},
+  year={2021}
 }
+
 
 ```
 
