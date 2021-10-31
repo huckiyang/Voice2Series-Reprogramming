@@ -69,9 +69,9 @@ elif args.net == 3: # unet
 # pr_model.summary()
 
 ## # of Source classes in Pre-trained Model
-if args.net == 0 or 3: ## choose pre-trained network 
+if args.net != 2: ## choose pre-trained network 
     source_classes = 36 ## Google Speech Commands
-elif args.net == 1 or 2:
+elif args.net == 2:
     source_classes = 128 ## AudioSet by VGGish
 else:
     source_classes = 512 ## VGGish feature num
@@ -85,9 +85,7 @@ drop_rate = args.dr*0.1
 
 pr_model.summary()
 
-print(source_classes)
 
-exit()
 
 try:
     assert mapping_num*num_classes <= source_classes
