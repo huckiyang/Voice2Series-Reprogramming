@@ -117,3 +117,17 @@ def VggishModel(nCategories = 36,iLen= 16000, sr= 16000, audioset = False):
     model = Model(inputs=[inputs], outputs=[output], name='VGG_pre')
     # model.summary()
     return model
+
+## Updated from 2021 March with TF Hub
+import y_params as yamnet_params
+import yamnet as yamnet_model
+
+def Yamnet():
+
+    params = yamnet_params.Params(sample_rate=16000, patch_hop_seconds=0.1)
+    # Set up the YAMNet model.
+    class_names = yamnet_model.class_names('weight/yamnet_class_map.csv')
+    yamnet = yamnet_model.yamnet_frames_model(params)
+    yamnet.load_weights('weight/yamnet.h5')
+    
+    return yamnet
