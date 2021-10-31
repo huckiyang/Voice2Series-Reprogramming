@@ -204,6 +204,17 @@ V2S [mask](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/ts_
 Yes, you are welcome. Please send an email to the author for potential collaberation.
 
 
+## Pre-trained models and training
+
+- VGGish AudioSet
+
+```bash
+cd weight
+pip install gdown
+gdown https://drive.google.com/uc?id=1mhqXZ8CANgHyepum7N4yrjiyIg6qaMe6
+
+```
+
 ### Reference
 
 - Voice2Series: Reprogramming Acoustic Models for Time Series Classification
