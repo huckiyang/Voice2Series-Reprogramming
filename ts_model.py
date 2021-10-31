@@ -10,7 +10,7 @@ from tensorflow.keras import initializers,regularizers
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow.keras.backend as K
 from kapre.utils import Normalization2D
-from SpeechModels import AttRNNSpeechModel
+from SpeechModels import AttRNNSpeechModel, VggishModel
 import numpy as np
 from utils import multi_mapping
 from tensorflow import keras
@@ -34,6 +34,14 @@ def AttRNN_Model():
     return model
 
 # model.summary()
+
+def VGGish_Model(audioset=False):
+    # nCategs=36
+    # iLen=16000
+    model = VggishModel(audioset = audioset)
+    model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
+    model.load_weights('weight/pr_vggish9405.h5')
+    return model
 
 # Adverserial Reprogramming layer
 class ARTLayer(Layer):

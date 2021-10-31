@@ -8,9 +8,8 @@ from tensorflow import keras
 import tensorflow.keras.backend as K
 import numpy as np
 ## time series NN models
-from ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model
+from ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model, VGGish_Model
 from ts_dataloader import readucr, plot_acc_loss
-# from vggish.model import Vggish_Model
 import argparse
 
 # Learning phase is set to 0 since we want the network to use the pretrained moving mean/var
@@ -60,7 +59,7 @@ print("--- X shape : ", x_train[0].shape, "--- Num of Classes : ", num_classes) 
 if args.net == 0:
     pr_model = AttRNN_Model()
 elif args.net == 1:
-    pr_model = Vggish_Model()
+    pr_model = VGGish_Model()
 elif args.net == 2: # audio-set
     pr_model = VGGish_Model(audioset = True)
 elif args.net == 3: # unet
@@ -70,7 +69,7 @@ elif args.net == 3: # unet
 # pr_model.summary()
 
 ## # of Source classes in Pre-trained Model
-if args.net == 0: ## choose pre-trained network 
+if args.net == 0 or 3: ## choose pre-trained network 
     source_classes = 36 ## Google Speech Commands
 elif args.net == 2:
     source_classes = 128 ## AudioSet by VGGish
