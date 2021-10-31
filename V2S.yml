@@ -209,5 +209,5 @@ dependencies:
     - sortedcontainers==2.3.0
     - soundfile==0.10.3.post1
     - threadpoolctl==2.1.0
-prefix: /home/ma-prof/anaconda3/envs/repr-adv
+prefix: /home/huck/anaconda3/envs/repr-adv
 
