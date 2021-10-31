@@ -17,13 +17,13 @@ from tensorflow import keras
 
 print("tensorflow vr. ", tf.__version__, "kapre vr. ",kapre.__version__)
 
-def AttRNN_Model():
+def AttRNN_Model(unet= False):
 
     nCategs=36
     sr=16000
     #iLen=16000
 
-    model = AttRNNSpeechModel(nCategs, samplingrate = sr, inputLength = None)
+    model = AttRNNSpeechModel(nCategs, samplingrate = sr, inputLength = None, unet= False)
     model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
     model.load_weights('weight/pr_attRNN.h5')
     # model = load_model('weight/model-attRNN.h5', custom_objects={'Melspectrogram': Melspectrogram, 'Normalization2D': Normalization2D })
@@ -40,7 +40,8 @@ def VGGish_Model(audioset=False):
     # iLen=16000
     model = VggishModel(audioset = audioset)
     model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
-    model.load_weights('weight/pr_vggish9405.h5')
+    if audioset == False:
+        model.load_weights('weight/pr_vggish9405.h5')
     return model
 
 # Adverserial Reprogramming layer
