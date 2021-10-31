@@ -84,16 +84,25 @@ def VggishModel(nCategories = 36,iLen= 16000, sr= 16000, audioset = False):
     inputs = L.Input((iLen,), name='input')
 
     x = L.Reshape((1, iLen))(inputs)
-    m = Melspectrogram(n_dft=1024, n_hop=32, input_shape=(1, iLen),
+
+    if audioset == True:
+        para_m = [128, 3800, 29]
+
+    else: # Google pre-trained 
+        para_m = [32, 7500, 31]
+    
+    m = Melspectrogram(n_dft=1024, n_hop=para_m[0], input_shape=(1, iLen),
                                padding='same', sr=sr, n_mels=64,
-                               fmin=125.0, fmax=7500, power_melgram=1.0,
+
+                               fmin=125.0, fmax=para_m[1], power_melgram=1.0,
                                return_decibel_melgram=True, trainable_fb=False,
                                trainable_kernel=False,
-                               name='mel_stft')
+                               name='mel_stft') 
     m.trainable = False
     mfs = m(x)
     mfs = L.Permute((2,1,3))(mfs)
-    mfs = L.Cropping2D(cropping=((0, 31), (0, 0)))(mfs)
+    mfs = L.Cropping2D(cropping=((0, para_m[2]), (0, 0)))(mfs)
+
     if audioset == True:
         vgg_model = VGGish(include_top=True, load_weights=True)
     else:

@@ -58,9 +58,9 @@ print("--- X shape : ", x_train[0].shape, "--- Num of Classes : ", num_classes) 
 ## Pre-trained Model for Adv Program  
 if args.net == 0:
     pr_model = AttRNN_Model()
-elif args.net == 1:
+elif args.net == 1: # fine-tuning with additive dense layer
     pr_model = VGGish_Model()
-elif args.net == 2: # audio-set
+elif args.net == 2: # audio-set output classes  = 128
     pr_model = VGGish_Model(audioset = True)
 elif args.net == 3: # unet
     pr_model = AttRNN_Model(unet= True)
@@ -71,7 +71,7 @@ elif args.net == 3: # unet
 ## # of Source classes in Pre-trained Model
 if args.net == 0 or 3: ## choose pre-trained network 
     source_classes = 36 ## Google Speech Commands
-elif args.net == 2:
+elif args.net == 1 or 2:
     source_classes = 128 ## AudioSet by VGGish
 else:
     source_classes = 512 ## VGGish feature num
@@ -82,6 +82,12 @@ target_shape = x_train[0].shape
 mapping_num = args.mapping
 seg_num = args.seg
 drop_rate = args.dr*0.1
+
+pr_model.summary()
+
+print(source_classes)
+
+exit()
 
 try:
     assert mapping_num*num_classes <= source_classes
