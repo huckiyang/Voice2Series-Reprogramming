@@ -143,6 +143,7 @@ trM = Model(inputs=tr_model.input, outputs=[tr_model.get_layer('dense_4').output
 def visual_tsne(adv_audios, origs_audio, y, num_classes, seg_num, use='base', ppl=40):
 
     aug_x = []
+    seed_id = 1
     for i in range(origs_audio.shape[0]):
         aug_audios = SegZeroPadding1D(tf.expand_dims(origs_audio[i], axis=0), seg_num,  origs_audio.shape[1])
         aug_x.append(tf.squeeze(aug_audios, axis=0))
@@ -164,7 +165,7 @@ def visual_tsne(adv_audios, origs_audio, y, num_classes, seg_num, use='base', pp
     df['label'] = df['y'].apply(lambda i: str(i))
 
     # For reproducability of the results
-    np.random.seed(42)
+    np.random.seed(seed_id)
     rndperm = np.random.permutation(df.shape[0])
 
     N = 10000
@@ -186,7 +187,7 @@ def visual_tsne(adv_audios, origs_audio, y, num_classes, seg_num, use='base', pp
     df['label'] = df['y'].apply(lambda i: str(i))
 
     # For reproducability of the results
-    np.random.seed(42)
+    np.random.seed(seed_id)
     rndperm = np.random.permutation(df.shape[0])
 
     N = 10000
@@ -207,7 +208,7 @@ def visual_tsne(adv_audios, origs_audio, y, num_classes, seg_num, use='base', pp
     df['label'] = df['y'].apply(lambda i: str(i))
 
     # For reproducability of the results
-    np.random.seed(42)
+    np.random.seed(seed_id)
     rndperm = np.random.permutation(df.shape[0])
 
     N = 10000
