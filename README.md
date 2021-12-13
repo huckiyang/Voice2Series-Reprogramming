@@ -35,6 +35,7 @@ conda env create -f V2S.yml
 pip install tensorflow-gpu==2.1.0
 pip install kapre==0.2.0
 pip install h5py==2.10.0
+pip install pyts
 ```
 
 ### Training
