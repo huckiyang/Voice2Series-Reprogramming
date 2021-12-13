@@ -137,7 +137,7 @@ def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
 
 tr_model = transfer_att(nCategories = num_classes)
 tr_model.load_weights('/content/Voice2Series-Reprogramming/weight/trsf_no8_map1_seg1_dr4_01_0.5838.h5')
-trM = Model(inputs=tr_model.input, outputs=[tr_model.get_layer('dense_7').output])
+trM = Model(inputs=tr_model.input, outputs=[tr_model.get_layer('dense_4').output])
 # tr_model.summary()
 
 def visual_tsne(adv_audios, origs_audio, y, num_classes, seg_num, use='base', ppl=40):
