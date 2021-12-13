@@ -96,7 +96,7 @@ target_shape = x_test[0].shape
 art_model = WARTmodel(target_shape, model, 36,  mapping_num, num_classes, mod=2)
 art_model.load_weights(path)
 
-ReproM = Model(inputs=art_model.input, outputs=[art_model.get_layer('reshape_7').output])
+ReproM = Model(inputs=art_model.input, outputs=[art_model.get_layer('reshape_8').output])
 
 repros = ReproM.predict(x_test)
 
