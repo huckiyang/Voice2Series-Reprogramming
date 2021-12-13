@@ -83,13 +83,13 @@ attM = Model(inputs=model.input, outputs=[model.get_layer('output').output,
                                           model.get_layer('mel_stft').output,
                                           model.get_layer('dense_1').output])
 
-task_num = 8
-path = '/content/Voice2Series-Reprogramming/weight/v2s_no8_map7_seg1_dr1_23_0.9396_2.h5'
+task_num = 63
+path = 'weight/v2s_no63_map18_seg10_dr2_273_0.9757.h5'
 x_train, y_train, x_test, y_test = readucr(task_num)
 classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 num_classes = len(np.unique(y_train))
-seg_num = 1
-mapping_num = 7
+seg_num = 10
+mapping_num = 18
 x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 target_shape = x_test[0].shape
 
@@ -136,7 +136,7 @@ def SegZeroPadding1D(orig_x, seg_num, orig_xlen):
     return aug_x
 
 tr_model = transfer_att(nCategories = num_classes)
-tr_model.load_weights('/content/Voice2Series-Reprogramming/weight/trsf_no8_map1_seg1_dr4_01_0.5838.h5')
+tr_model.load_weights('weight/trsf_no63_map1_seg1_dr4_01_0.6432.h5')
 trM = Model(inputs=tr_model.input, outputs=[tr_model.get_layer('dense_4').output])
 # tr_model.summary()
 
