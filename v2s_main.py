@@ -29,7 +29,7 @@ x_train, y_train, x_test, y_test = readucr(args.dataset)
 
 if args.dataset == 2 # fix the public code error
     y_train[y_train == -1] = 0
-    y_test[y_test == -1] =0 
+    y_test[y_test == -1] = 0 
 
 classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 
