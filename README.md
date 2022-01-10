@@ -218,25 +218,6 @@ gdown https://drive.google.com/uc?id=1mhqXZ8CANgHyepum7N4yrjiyIg6qaMe6
 
 ```
 
-### Reference
-
-- Voice2Series: Reprogramming Acoustic Models for Time Series Classification
-
-Please consider to reference the paper if you find this work helpful or relative to your research. The draft was done in Jan 2021; the project started in Sep 2020.
-
-
-```bib
-
-@InProceedings{pmlr-v139-yang21j,
-  title = 	 {Voice2Series: Reprogramming Acoustic Models for Time Series Classification},
-  author =       {Yang, Chao-Han Huck and Tsai, Yun-Yun and Chen, Pin-Yu},
-  booktitle = 	 {Proceedings of the 38th International Conference on Machine Learning},
-  pages = 	 {11808--11819},
-  year = 	 {2021},
-  publisher =    {PMLR},
-}
-
-```
 
 #### Additional Questions
 
