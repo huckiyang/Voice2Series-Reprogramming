@@ -1,7 +1,4 @@
-# CHH Yang et al. 2021 (http://proceedings.mlr.press/v139/yang21j/yang21j.pdf)
 # Apache Apache-2.0 License
-
-
 from tensorflow.keras.layers import Dense, ZeroPadding1D, Reshape
 import tensorflow as tf
 from tensorflow import keras
