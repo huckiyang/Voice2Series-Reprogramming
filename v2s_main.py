@@ -27,13 +27,15 @@ args = parser.parse_args()
 
 x_train, y_train, x_test, y_test = readucr(args.dataset)
 
+if args.dataset == 2 # fix the public code error
+    y_train[y_train == -1] = 0
+    y_test[y_test == -1] =0 
+
 classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 
 x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
 x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 
-# Note for cross validation to report a new time series results. Please refer to the cross-validation and "only use the training loss" to tune the model.
-# (Dau et al., 2019) and (Wang et al., 2017) cited in the V2S paper
 # The x_test and y_test are the official validation set in the UCR.
 
 num_classes = len(np.unique(y_train))
