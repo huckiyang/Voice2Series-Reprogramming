@@ -27,7 +27,7 @@ args = parser.parse_args()
 
 x_train, y_train, x_test, y_test = readucr(args.dataset)
 
-if args.dataset == 2: # fix the public code error
+if args.dataset == 2: # fix the public code error for ECG 200 reported by Yi Zhuang 
     y_train[y_train == -1] = 0
     y_test[y_test == -1] = 0 
 
