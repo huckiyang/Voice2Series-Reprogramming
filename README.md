@@ -6,7 +6,7 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
--  [Arxiv](https://arxiv.org/pdf/2106.09296.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://slideslive.com/38958989/voice2series-reprogramming-acoustic-models-for-time-series-classification?ref=speaker-18620-latest) | [Slides](https://icml.cc/media/icml-2021/Slides/9059.pdf)
+-  [Paper](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://slideslive.com/38958989/voice2series-reprogramming-acoustic-models-for-time-series-classification?ref=speaker-18620-latest) | [Slides](https://icml.cc/media/icml-2021/Slides/9059.pdf)
 
 
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="500">
@@ -15,6 +15,8 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 - We provide an end-to-end approach (Repro. layer) to reprogram on time series data on `raw waveform` with a differential mel-spectrogram layer from kapre. 
 
 - No offiline acoustic feature extraction and all layers are differentiable.
+
+- updated: if you have used the `ECG 200` dataset in this code, please `git pull` and refer to the issue for [one reported label loading error](https://github.com/huckiyang/Voice2Series-Reprogramming/issues/1). (has been fixed)
 
 ### Environment 
 
