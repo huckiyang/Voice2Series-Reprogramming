@@ -6,7 +6,7 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
--  [Paper](https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/yang21j.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://slideslive.com/38958989/voice2series-reprogramming-acoustic-models-for-time-series-classification?ref=speaker-18620-latest) | [Slides](https://icml.cc/media/icml-2021/Slides/9059.pdf)
+-  [Paper](https://arxiv.org/pdf/2106.09296.pdf) | [Colab Demo](https://colab.research.google.com/drive/18WpsEfz_qjjHcA7BVW-y9SHN3XLKT1Yq?usp=sharing) | [Video](https://slideslive.com/38958989/voice2series-reprogramming-acoustic-models-for-time-series-classification?ref=speaker-18620-latest) | [Slides](https://icml.cc/media/icml-2021/Slides/9059.pdf)
 
 
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="500">
