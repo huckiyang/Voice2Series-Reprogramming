@@ -25,7 +25,7 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 
 Tensorflow 2.2 (CUDA=10.0) and Kapre 0.2.0. 
 
-- PyTorch noted: Echo to many interests from the community, we will also provide Pytorch V2S layers and frameworks around this October, incoperating the new torch audio layers. Feel free to email the authors for `further reprogramming collaboration`.
+- PyTorch noted: Echo to many interests from the community, we will also provide Pytorch V2S layers and frameworks, incoperating the new torch audio layers. Feel free to email the authors for `further reprogramming collaboration`.
 
 - option 1 (from yml)
 
