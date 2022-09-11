@@ -26,10 +26,9 @@ args = parser.parse_args()
 
 
 x_train, y_train, x_test, y_test = readucr(args.dataset)
-
-if args.dataset == 2: # fix the public code error for ECG 200 reported by Yi Zhuang 
-    y_train[y_train == -1] = 0
-    y_test[y_test == -1] = 0 
+    
+y_train = [abs(x) for x in y_train]
+y_test = [abs(x) for x in y_test]
 
 classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 
