@@ -50,7 +50,7 @@ Please also check the paper for actual validation details. Many Thanks!
 
 
 ```python
-python v2s_main.py --dataset 0 --eps 5 --mod 0
+python v2s_main.py --dataset 2 --eps 20 --mod 2 --seg 6
 ```
 
 
