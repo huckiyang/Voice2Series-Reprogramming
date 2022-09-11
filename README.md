@@ -50,128 +50,68 @@ Please also check the paper for actual validation details. Many Thanks!
 
 
 ```python
-python v2s_main.py --dataset 2 --eps 20 --mod 2 --seg 6
+python v2s_main.py --dataset 0 --eps 20 --mod 2 --seg 18 --mapping 1
 ```
 
 
 - Result
 
-```shellseg idx: 0 --> start: 0, end: 500
-seg idx: 1 --> start: 5000, end: 5500
-seg idx: 2 --> start: 10000, end: 10500
-Tensor("AddV2_2:0", shape=(None, 16000, 1), dtype=float32)
---- Preparing Masking Matrix
-Model: "model_1"
-Layer (type)                    Output Shape         Param #     Connected to                     
-==================================================================================================
-input_1 (InputLayer)            [(None, 500, 1)]     0                                            
-__________________________________________________________________________________________________
-zero_padding1d (ZeroPadding1D)  (None, 16000, 1)     0           input_1[0][0]                    
-__________________________________________________________________________________________________
-tf_op_layer_AddV2 (TensorFlowOp [(None, 16000, 1)]   0           zero_padding1d[0][0]             
-__________________________________________________________________________________________________
-zero_padding1d_1 (ZeroPadding1D (None, 16000, 1)     0           input_1[0][0]                    
-__________________________________________________________________________________________________
-tf_op_layer_AddV2_1 (TensorFlow [(None, 16000, 1)]   0           tf_op_layer_AddV2[0][0]          
-                                                                 zero_padding1d_1[0][0]           
-__________________________________________________________________________________________________
-zero_padding1d_2 (ZeroPadding1D (None, 16000, 1)     0           input_1[0][0]                    
-__________________________________________________________________________________________________
-tf_op_layer_AddV2_2 (TensorFlow [(None, 16000, 1)]   0           tf_op_layer_AddV2_1[0][0]        
-                                                                 zero_padding1d_2[0][0]           
-__________________________________________________________________________________________________
-art_layer (ARTLayer)            (None, 16000, 1)     16000       tf_op_layer_AddV2_2[0][0]        
-__________________________________________________________________________________________________
-reshape_1 (Reshape)             (None, 16000)        0           art_layer[0][0]                  
-__________________________________________________________________________________________________
-model (Model)                   (None, 36)           1292911     reshape_1[0][0]                  
-==================================================================================================
-Total params: 1,308,911
-Trainable params: 16,000
-Non-trainable params: 1,292,911
-__________________________________________________________________________________________________
-Epoch 1/5
-2021-09-21 00:39:41.269756: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
-2021-09-21 00:39:41.497716: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
-113/113 [==============================] - 6s 49ms/step - loss: 5.0755 - accuracy: 0.9431 - val_loss: 3.7315 - val_accuracy: 0.9985
-Epoch 2/5
-113/113 [==============================] - 4s 39ms/step - loss: 3.1852 - accuracy: 0.9939 - val_loss: 2.7873 - val_accuracy: 0.9902
-Epoch 3/5
-113/113 [==============================] - 4s 39ms/step - loss: 2.5128 - accuracy: 0.9989 - val_loss: 2.2929 - val_accuracy: 0.9985
-Epoch 4/5
-113/113 [==============================] - 4s 39ms/step - loss: 2.1230 - accuracy: 0.9994 - val_loss: 1.9733 - val_accuracy: 0.9992
-Epoch 5/5
-113/113 [==============================] - 4s 38ms/step - loss: 1.8629 - accuracy: 0.9997 - val_loss: 1.7518 - val_accuracy: 1.0000
---- Train loss: 1.7529315948486328
-- Train accuracy: 1.0
---- Test loss: 1.7516217231750488
-- Test accuracy: 1.0
-=== Best Val. Acc:  1.0  At Epoch of  4
+```
+Epoch 14/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.4493 - accuracy: 0.9239 - val_loss: 0.4571 - val_accuracy: 0.9106
+Epoch 15/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.4297 - accuracy: 0.9306 - val_loss: 0.4381 - val_accuracy: 0.9265
+Epoch 16/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.4182 - accuracy: 0.9247 - val_loss: 0.4204 - val_accuracy: 0.9205
+Epoch 17/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.3972 - accuracy: 0.9320 - val_loss: 0.4072 - val_accuracy: 0.9242
+Epoch 18/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.3905 - accuracy: 0.9303 - val_loss: 0.4099 - val_accuracy: 0.9242
+Epoch 19/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.3765 - accuracy: 0.9320 - val_loss: 0.3924 - val_accuracy: 0.9258
+Epoch 20/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.3704 - accuracy: 0.9300 - val_loss: 0.3816 - val_accuracy: 0.9250
+--- Train loss: 0.36046191089949786
+- Train accuracy: 0.93113023
+--- Test loss: 0.38329164963780027
+- Test accuracy: 0.925
+=== Best Val. Acc:  0.92651516  At Epoch of  14
 
 ```
 
 - Many-to-one Label Mapping
 
 ```python
-python v2s_main.py --dataset 0 --eps 5 --mapping 3 --mod 1
+python v2s_main.py --dataset 0 --eps 20 --mod 2 --seg 18 --mapping 18
 ```
 
 - Results
 
 ```shell
-seg idx: 0 --> start: 0, end: 500
-Tensor("AddV2:0", shape=(None, 16000, 1), dtype=float32)
---- Preparing Masking Matrix
-Model: "model_1"
-__________________________________________________________________________________________________
-Layer (type)                    Output Shape         Param #     Connected to                     
-==================================================================================================
-input_1 (InputLayer)            [(None, 500, 1)]     0                                            
-__________________________________________________________________________________________________
-zero_padding1d (ZeroPadding1D)  (None, 16000, 1)     0           input_1[0][0]                    
-__________________________________________________________________________________________________
-tf_op_layer_AddV2 (TensorFlowOp [(None, 16000, 1)]   0           zero_padding1d[0][0]             
-__________________________________________________________________________________________________
-art_layer (ARTLayer)            (None, 16000, 1)     16000       tf_op_layer_AddV2[0][0]          
-__________________________________________________________________________________________________
-reshape_1 (Reshape)             (None, 16000)        0           art_layer[0][0]                  
-__________________________________________________________________________________________________
-model (Model)                   (None, 36)           1292911     reshape_1[0][0]                  
-__________________________________________________________________________________________________
-tf_op_layer_MatMul (TensorFlowO [(None, 6)]          0           model[1][0]                      
-__________________________________________________________________________________________________
-tf_op_layer_Shape (TensorFlowOp [(2,)]               0           tf_op_layer_MatMul[0][0]         
-__________________________________________________________________________________________________
-tf_op_layer_strided_slice (Tens [()]                 0           tf_op_layer_Shape[0][0]          
-__________________________________________________________________________________________________
-tf_op_layer_Reshape_2/shape (Te [(3,)]               0           tf_op_layer_strided_slice[0][0]  
-__________________________________________________________________________________________________
-tf_op_layer_Reshape_2 (TensorFl [(None, 2, 3)]       0           tf_op_layer_MatMul[0][0]         
-                                                                 tf_op_layer_Reshape_2/shape[0][0]
-__________________________________________________________________________________________________
-tf_op_layer_Mean (TensorFlowOpL [(None, 2)]          0           tf_op_layer_Reshape_2[0][0]      
-==================================================================================================
-Total params: 1,308,911
-Trainable params: 16,000
-Non-trainable params: 1,292,911
-__________________________________________________________________________________________________
-Epoch 1/5
-2021-09-21 01:23:21.163046: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
-2021-09-21 01:23:21.389418: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
-113/113 [==============================] - 5s 48ms/step - loss: 2.0503 - accuracy: 1.0000 - val_loss: 1.3729 - val_accuracy: 1.0000
-Epoch 2/5
-113/113 [==============================] - 4s 40ms/step - loss: 1.1730 - accuracy: 1.0000 - val_loss: 1.0234 - val_accuracy: 1.0000
-Epoch 3/5
-113/113 [==============================] - 4s 40ms/step - loss: 0.9352 - accuracy: 1.0000 - val_loss: 0.8614 - val_accuracy: 1.0000
-Epoch 4/5
-113/113 [==============================] - 4s 40ms/step - loss: 0.8044 - accuracy: 1.0000 - val_loss: 0.7538 - val_accuracy: 1.0000
-Epoch 5/5
-113/113 [==============================] - 4s 39ms/step - loss: 0.7154 - accuracy: 1.0000 - val_loss: 0.6810 - val_accuracy: 1.0000
---- Train loss: 0.680957019329071
-- Train accuracy: 1.0
---- Test loss: 0.6809701919555664
-- Test accuracy: 1.0
-=== Best Val. Acc:  1.0  At Epoch of  0
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.8762 - accuracy: 0.9231 - val_loss: 0.8479 - val_accuracy: 0.9182
+Epoch 12/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.8360 - accuracy: 0.9236 - val_loss: 0.8191 - val_accuracy: 0.9152
+Epoch 13/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.7920 - accuracy: 0.9242 - val_loss: 0.7693 - val_accuracy: 0.9273
+Epoch 14/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.7586 - accuracy: 0.9228 - val_loss: 0.7358 - val_accuracy: 0.9235
+Epoch 15/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.7265 - accuracy: 0.9270 - val_loss: 0.7076 - val_accuracy: 0.9205
+Epoch 16/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.6980 - accuracy: 0.9247 - val_loss: 0.6707 - val_accuracy: 0.9295
+Epoch 17/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.6650 - accuracy: 0.9281 - val_loss: 0.6473 - val_accuracy: 0.9250
+Epoch 18/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.6444 - accuracy: 0.9286 - val_loss: 0.6270 - val_accuracy: 0.9303
+Epoch 19/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.6194 - accuracy: 0.9286 - val_loss: 0.6020 - val_accuracy: 0.9318
+Epoch 20/20
+3601/3601 [==============================] - 4s 1ms/sample - loss: 0.5964 - accuracy: 0.9275 - val_loss: 0.5813 - val_accuracy: 0.9227
+--- Train loss: 0.5795955053139845
+- Train accuracy: 0.93113023
+--- Test loss: 0.5856682072986256
+- Test accuracy: 0.92651516
+=== Best Val. Acc:  0.9318182  At Epoch of  18
 ```
 
 
