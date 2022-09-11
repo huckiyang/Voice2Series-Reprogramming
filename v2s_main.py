@@ -14,7 +14,7 @@ K.clear_session()
 # K.set_learning_phase(0)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--mod", type = int, default = 0, help = "Single input seq (0), multiple input aug (1), repro w/ TF (2)")
+parser.add_argument("--mod", type = int, default = 2, help = "Single input seq (0), multiple input aug (1), repro w/ TF (2)")
 parser.add_argument("--net", type = int, default = 0, help = "Pretrained (0), AttRNN (#32), (1) VGGish (#512)")
 parser.add_argument("--dataset", type = int, default = 0, help = "Ford-A (0), Beef (1), ECG200 (2), Wine (3), Earthquakes (4), Worms (5), Distal (6), Outline Correct (7), ECG-5k (8), ArrowH (9), CBF (10), ChlorineCon (11)")
 parser.add_argument("--mapping", type= int, default=1, help = "number of multi-mapping")
@@ -27,8 +27,8 @@ args = parser.parse_args()
 
 x_train, y_train, x_test, y_test = readucr(args.dataset)
     
-y_train = [abs(x) for x in y_train]
-y_test = [abs(x) for x in y_test]
+y_train = [np.uint32(i) for i in y_train]
+y_test = [np.uint32(i) for i in y_test]
 
 classes = np.unique(np.concatenate((y_train, y_test), axis=0))
 
@@ -40,15 +40,13 @@ x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 num_classes = len(np.unique(y_train))
 
 if np.min(np.unique(y_train))!=0: #for those tasks with labels not start from 0, shift to 0 
-    y_train%=num_classes 
-    y_test%=num_classes
+    max_v = np.max(y_train)
+    y_train=[i%max_v  for i in y_train]
+    y_test=[i%max_v  for i in y_test]
 
 idx = np.random.permutation(len(x_train))
 x_train = x_train[idx]
-y_train = y_train[idx]
-
-y_train[y_train == -1] = 0
-y_test[y_test == -1] = 0
+y_train = np.array(y_train)[idx]
 
 print("--- X shape : ", x_train[0].shape, "--- Num of Classes : ", num_classes) ## target class
 
