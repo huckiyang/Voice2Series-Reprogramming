@@ -1,5 +1,6 @@
 '''A Wasserstein Subsequence Kernel for Time Series'''
 '''This is one example code used in ICDM https://github.com/BorgwardtLab/WTK built upon POT'''
+'''We made some modification for distance visualization'''
 
 
 import numpy as np
@@ -7,6 +8,71 @@ import ot
 
 from sklearn.metrics import pairwise
 from sklearn.preprocessing import scale
+
+from tensorflow.keras.layers import Dense, ZeroPadding1D, Reshape
+from tensorflow.keras import models
+import tensorflow as tf
+from tensorflow import keras
+import tensorflow.keras.backend as K
+import numpy as np
+import os
+from tqdm import tqdm
+## time series NN models
+from ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model
+from ts_dataloader import readucr, plot_acc_loss
+# from vggish.model import Vggish_Model
+import argparse
+import time as ti
+# Learning phase is set to 0 since we want the network to use the pretrained moving mean/var
+K.clear_session()
+
+def comput_wd(model, kys, w_path):
+
+    model.load_weights("weight/eps100/wdis_No"+ str(args.dataset)+"/"+w_path)
+    t_score = model.evaluate(x_train, y_train, verbose=0)
+
+    v_score = model.evaluate(x_test, y_test, verbose=0)
+
+    # get reprogram layer output only
+    rp_layer = model.get_layer(index=2)
+    rp_model = models.Model([model.inputs], [rp_layer.output])
+    # rp_model.summary()
+
+    rw_test = rp_model.predict(x_test[kys,:]) # take n_dis samples
+    rw_train = rp_model.predict(x_train[kys,:])
+
+    p = args.norm 
+
+    # Compute wasserstein distance matrices with subsequent length k=1
+    D_test = transform_to_dist_matrix(rw_test[:,0], x_test[kys, :, 0], 1)
+    D_train = transform_to_dist_matrix(rw_train[:,0], x_train[kys, :, 0], 1)
+    # print("-- D_train shape: ", D_train.shape, " D_test shape:", D_test.shape) 
+    return t_score, v_score, np.linalg.norm(D_train , ord=p), np.linalg.norm(D_test , ord=p)
+
+
+max_l = min(x_test.shape[0], x_train.shape[0])
+kys = np.random.choice(max_l, min(max_l, 100), replace=False)
+# w_book = ['No8_map7-02-0.5844.h5',"No8_map7-04-0.5956.h5", "No8_map7-06-0.8807.h5", "No8_map7-08-0.7551.h5", "No8_map7-10-0.9198.h5"]
+
+w_book = [f for f in os.listdir( 'weight/eps100/wdis_No'+ str(args.dataset) + '/') if f.endswith('.h5')]
+
+tr_loss = []
+val_loss = []
+tr_acc = []
+val_acc = []
+tr_wd = []
+val_wd = []
+
+for i in tqdm(sorted(w_book)):
+    model_i = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes)
+    model_i.compile(loss='categorical_crossentropy', optimizer = adam, metrics=['accuracy'])
+    t_s, v_s, d_tr, d_te = comput_wd(model_i, kys, w_path = i)
+    tr_loss.append(t_s[0])
+    tr_acc.append(t_s[1])
+    tr_wd.append(d_tr)
+    val_loss.append(v_s[0])
+    val_acc.append(v_s[1])
+    val_wd.append(d_te)
 
 def transform_to_dist_matrix(time_series_train, time_series_test, k, normalized=False):
     '''
@@ -265,3 +331,5 @@ def ensure_psd(K, tol=1e-8):
         return Xp
     else:
         return K
+
+   
