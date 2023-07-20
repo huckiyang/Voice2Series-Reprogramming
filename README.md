@@ -2,7 +2,6 @@
 
 Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classification
 
-
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
 
@@ -15,6 +14,8 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 - We provide an end-to-end approach (Repro. layer) to reprogram on time series data on `raw waveform` with a differential mel-spectrogram layer from kapre. 
 
 - No offiline acoustic feature extraction and all layers are differentiable.
+
+- Pytorch version could be find out in [ICASSP 23 Music Reprogramming](https://github.com/biboamy/music-repro).
 
 - updated: if you have used the `ECG 200` dataset in this code, please `git pull` and refer to the issue for [one reported label loading error](https://github.com/huckiyang/Voice2Series-Reprogramming/issues/1). (has been fixed)
 
