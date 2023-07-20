@@ -15,7 +15,7 @@ Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classifi
 
 - No offiline acoustic feature extraction and all layers are differentiable.
 
-- Pytorch version could be find out in [ICASSP 23 Music Reprogramming](https://github.com/biboamy/music-repro).
+- Pytorch version of reprogram layer could be found out in [ICASSP 23 Music Reprogramming](https://github.com/biboamy/music-repro).
 
 - updated: if you have used the `ECG 200` dataset in this code, please `git pull` and refer to the issue for [one reported label loading error](https://github.com/huckiyang/Voice2Series-Reprogramming/issues/1). (has been fixed)
 
