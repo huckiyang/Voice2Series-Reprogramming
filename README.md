@@ -1,6 +1,6 @@
 # Voice2Series-Reprogramming
 
-Voice2Series: Adversarial Reprogramming Acoustic Models for Time Series Classification
+Voice2Series: Reprogramming / Prompting Acoustic Models for Time Series Classification
 
 <img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/img.png" width="500">
 
